@@ -10,7 +10,7 @@ export default function Mobile() {
         );
       }}
     >
-      My Workspace
+      See my Workspace
     </div>
   );
 }

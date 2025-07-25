@@ -17,7 +17,7 @@
   --color-hidden-header: rgba(200, 200, 200, 0.45);
   --color-secondary: blue;
   --color-highlight: purple;
-  --color-brdr-primary: rgba(120, 120, 120, 0.6);
+  --color-brdr-primary: rgba(150, 150, 150, 1);
   --color-brdr-highlight: rgba(160, 120, 255, 0.87);
   --font-family-nixie-one: "Nixie One", cursive;
 }

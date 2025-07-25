@@ -2,20 +2,22 @@ import type { ReactNode, ComponentType } from "react";
 import { clsx } from "clsx";
 
 export default function GridCard({
-  cardHeight,
-  cardWidth,
-  component: Component,
+  cHeight,
+  cWidth,
+  comp: Component,
+  cursor,
   children,
 }: {
-  cardHeight: number;
-  cardWidth: number;
-  component?: ComponentType<{}>;
+  cHeight: number;
+  cWidth: number;
+  comp?: ComponentType<{}>;
+  cursor?: string;
   children?: any;
 }) {
   const className = clsx(
     `p-6`,
     `border-brdr-primary`,
-    `border-3`,
+    `border-4`,
     `rounded-xl`,
     `transition-colors`,
     `duration-2000`,
@@ -23,8 +25,9 @@ export default function GridCard({
     `hover:border-primary`,
     `ease-out`,
     `bg-surface`,
-    `lg:row-span-${cardHeight}`,
-    `lg:col-span-${cardWidth}`,
+    `lg:row-span-${cHeight}`,
+    `lg:col-span-${cWidth}`,
+    `cursor-${cursor ?? "default"}`,
     `overflow-hidden`,
     "lg:overflow-x-hidden",
     "lg:overflow-y-auto",
