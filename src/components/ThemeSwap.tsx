@@ -24,7 +24,7 @@ export default function ThemeSwap() {
           <button
             key={color.name}
             onClick={() => handleColorSelect(index)}
-            className={`h-6 w-6 rounded-full border-2 transition-all hover:scale-110 ${
+            className={`h-6 w-6 cursor-pointer rounded-full border-2 transition-all hover:scale-110 ${
               activeColorIndex === index
                 ? "border-white"
                 : "border-1 border-gray-400"
