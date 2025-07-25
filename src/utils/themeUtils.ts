@@ -10,10 +10,9 @@ export const selectColor = (
 };
 
 export const handleBrightnessChange = (brightness: number) => {
-  const hexValue = Math.round((brightness / 100) * 255)
-    .toString(16)
-    .padStart(2, "0");
-  const backgroundColor = `#${hexValue}${hexValue}${hexValue}`;
+  const value = Math.round((brightness / 100) * 255);
+
+  const backgroundColor = `rgb(${value},${value},${value})`;
 
   document.documentElement.style.setProperty(
     "--background-color",

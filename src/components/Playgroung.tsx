@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function Playgroung() {
-  return <div>Playgroung</div>;
+export default function Playground() {
+  return <div>Playground</div>;
 }

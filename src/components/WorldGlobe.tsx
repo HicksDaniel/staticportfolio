@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Globe from "react-globe.gl";
 import * as topojson from "topojson-client";
 import iso from "iso-3166-1";
+import * as THREE from "three";
 
 // Minimal mapping of postal codes to full state names
 const stateLookup: Record<string, string> = {
@@ -133,6 +134,22 @@ function CombinedGlobe() {
     Promise.all([pCountries, pStates])
       .then(([countries, states]) => setPolygons([...countries, ...states]))
       .catch(console.error);
+    const scene = globeEl.current.scene();
+    const loader = new THREE.TextureLoader();
+    loader.load(
+      "/constellations_map_show_milkyway_constallations.webp.webp",
+      (texture) => {
+        const geom = new THREE.SphereGeometry(100000, 64, 32);
+        geom.scale(-1, 1, 1); // invert normals so inside is visible
+        const mat = new THREE.MeshBasicMaterial({
+          map: texture,
+          side: THREE.DoubleSide,
+          depthWrite: false, // ensure it's always rendered behind
+        });
+        const starMesh = new THREE.Mesh(geom, mat);
+        scene.add(starMesh);
+      },
+    );
   }, []);
 
   return (
@@ -155,84 +172,17 @@ function CombinedGlobe() {
           ? (properties as any).name
           : (properties as any).ADMIN
       }
-      onPolygonClick={({ properties }) =>
-        stateLookup[(properties as any).name.slice(0, 2).toUpperCase()]
-          ? `State: ${(properties as any).name}`
-          : `Country: ${(properties as any).ADMIN}`
-            ? alert(`Country: ${(properties as any).ADMIN}`)
-            : null
-      }
+      onPolygonClick={({ properties }) => {
+        const name = (properties as any).name || (properties as any).ADMIN;
+        alert(
+          stateLookup[(properties as any).name?.slice(0, 2).toUpperCase()]
+            ? `State: ${name}`
+            : `Country: ${name}`,
+        );
+      }}
       backgroundColor="black"
     />
   );
 }
 
 export default CombinedGlobe;
-
-// import React, { useEffect, useState, useRef } from "react";
-// import Globe from "react-globe.gl";
-// import * as topojson from "topojson-client";
-// import iso from "iso-3166-1"; // npm install iso-3166-1
-
-// function SpinningGlobe() {
-//   const globeEl = useRef<any>();
-//   const [polygons, setPolygons] = useState<any[]>([]);
-
-//   const visitedNations = [
-//     "US",
-//     "DE",
-//     "DO",
-//     "BS",
-//     "PE",
-//     "BR",
-//     "AR",
-//     "CL",
-//     "IE",
-//     "GB",
-//   ];
-
-//   useEffect(() => {
-//     // Enable auto-rotation
-//     globeEl.current.controls().autoRotate = true;
-//     globeEl.current.controls().autoRotateSpeed = 3;
-
-//     fetch("https://unpkg.com/world-atlas@2/countries-110m.json")
-//       .then((res) => res.json())
-//       .then((topology) => {
-//         const allCountries = topojson.feature(
-//           topology,
-//           topology.objects.countries,
-//         ).features;
-
-//         const matched = visitedNations
-//           .map((code) => {
-//             const country = iso.whereAlpha2(code.toUpperCase());
-//             if (!country) {
-//               console.warn(`No ISO mapping for ${code}`);
-//               return null;
-//             }
-//             return allCountries.find((f) => f.id === country.numeric);
-//           })
-//           .filter(Boolean) as any[];
-
-//         setPolygons(matched);
-//       })
-//       .catch((err) => console.error(err));
-//   }, []);
-
-//   return (
-//     <Globe
-//       ref={globeEl}
-//       globeImageUrl="//unpkg.com/three-globe/example/img/earth-dark.jpg"
-//       polygonsData={polygons}
-//       polygonCapColor={() => "rgba(200, 200, 200, 0.7)"}
-//       polygonSideColor={() => "rgba(0, 100, 255, 1)"}
-//       polygonStrokeColor={() => "#888"}
-//       polygonLabel={({ properties: d }) => d.ADMIN}
-//       onPolygonClick={({ properties: d }) => alert(`You clicked: ${d.ADMIN}`)}
-//       backgroundColor="black"
-//     />
-//   );
-// }
-
-// export default SpinningGlobe;

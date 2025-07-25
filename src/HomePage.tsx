@@ -20,12 +20,30 @@ function HomePage() {
         <GridCard cHeight={6} cWidth={1} comp={About} />
         <GridCard cHeight={4} cWidth={1} comp={Contact} />
         <GridCard cHeight={1} cWidth={1} comp={LocalTime} />
-        <GridCard cHeight={1} cWidth={1} comp={Design} cursor="pointer" />
+        <GridCard
+          cHeight={1}
+          cWidth={1}
+          comp={Design}
+          cursor="pointer"
+          nav="/design"
+        />
         <GridCard cHeight={2} cWidth={1} comp={WhatNow} />
-        <GridCard cHeight={1} cWidth={1} comp={Playgroung} cursor="pointer" />
+        <GridCard
+          cHeight={1}
+          cWidth={1}
+          comp={Playgroung}
+          cursor="pointer"
+          nav="/playground"
+        />
         <GridCard cHeight={1} cWidth={1} comp={Blog} cursor="pointer" />
         <GridCard cHeight={1} cWidth={1} comp={Mobile} cursor="pointer" />
-        <GridCard cHeight={1} cWidth={1} comp={Visited} cursor="pointer" />
+        <GridCard
+          cHeight={1}
+          cWidth={1}
+          comp={Visited}
+          cursor="pointer"
+          nav="/theworld"
+        />
         <GridCard cHeight={1} cWidth={1} comp={ThemeSwap} />
         <GridCard cHeight={1} cWidth={1} comp={Trademark} />
       </div>

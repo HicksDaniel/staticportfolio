@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { selectColor, handleBrightnessChange } from "../utils/themeUtils";
 import { colorPalette } from "../libs/colorpalette";
 
 export default function ThemeSwap() {
   const [activeColorIndex, setActiveColorIndex] = useState(0);
-  const [backgroundBrightness, setBackgroundBrightness] = useState(50);
+  const [backgroundBrightness, setBackgroundBrightness] = useState(20);
+
+  useEffect(() => {
+    // I dont' really want to use a useEffect here. But since i'm altering the DOM directly, I don't see a way around it, without restructuing.
+    selectColor(activeColorIndex, colorPalette);
+    handleBrightnessChange(backgroundBrightness);
+  }, []);
 
   const handleColorSelect = (index: number) => {
     selectColor(index, colorPalette);
@@ -38,8 +44,8 @@ export default function ThemeSwap() {
         <i className="pi pi-moon text-sm" />
         <input
           type="range"
-          min="0"
-          max="100"
+          min="10"
+          max="90"
           value={backgroundBrightness}
           onChange={handleSliderChange}
           className="accent-primary"
