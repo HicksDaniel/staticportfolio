@@ -5,17 +5,28 @@ import iso from "iso-3166-1";
 import * as THREE from "three";
 import { stateLookup, visitedCountries, visitedStates } from "../libs/consts";
 
+interface PolygonProperties {
+  name?: string;
+  ADMIN?: string;
+  [key: string]: any;
+}
+
+interface PolygonData {
+  properties: PolygonProperties;
+  [key: string]: any;
+}
+
 function CombinedGlobe() {
-  const globeEl = useRef();
-  const starMeshRef = useRef();
+  const globeEl = useRef<any>();
+  const starMeshRef = useRef<THREE.Mesh>();
   const materialsRef = useRef<{
-    matStar: any;
-    matFigures: any;
-    matBounds: any;
+    matStar: THREE.MeshBasicMaterial;
+    matFigures: THREE.MeshBasicMaterial;
+    matBounds: THREE.MeshBasicMaterial;
   }>();
   const [showFigures, setShowFigures] = useState(false);
   const [showBounds, setShowBounds] = useState(false);
-  const [polygons, setPolygons] = useState([]);
+  const [polygons, setPolygons] = useState<PolygonData[]>([]);
 
   useEffect(() => {
     globeEl.current.controls().autoRotate = true;
@@ -27,27 +38,26 @@ function CombinedGlobe() {
     )
       .then((res) => res.json())
       .then((worldTopo) => {
-        const countries = topojson.feature(
-          worldTopo,
-          worldTopo.objects.countries,
-        ).features;
+        const countries =
+          topojson.feature(worldTopo, worldTopo.objects.countries).features ||
+          "";
         return visitedCountries
           .map((code) => {
             const numeric = iso.whereAlpha2(code)?.numeric;
             return numeric ? countries.find((f) => f.id === numeric) : null;
           })
-          .filter(Boolean) as any[];
+          .filter(Boolean) as PolygonData[];
       });
 
     const pStates = fetch("https://unpkg.com/us-atlas@3/states-10m.json")
       .then((res) => res.json())
       .then((usTopo) => {
         const states = topojson.feature(usTopo, usTopo.objects.states).features;
-        return states.filter((s) =>
+        return states.filter((s: PolygonData) =>
           visitedStates
             .map((code) => stateLookup[code])
-            .includes((s.properties as any).name),
-        ) as any[];
+            .includes(s.properties.name || ""),
+        ) as PolygonData[];
       });
 
     Promise.all([pCountries, pStates])
@@ -142,25 +152,25 @@ function CombinedGlobe() {
         ref={globeEl}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-dark.jpg"
         polygonsData={polygons}
-        polygonCapColor={({ properties }) =>
-          stateLookup[(properties as any).name.slice(0, 2).toUpperCase()]
+        polygonCapColor={(d: PolygonData) =>
+          stateLookup[d.properties?.name?.slice(0, 2).toUpperCase()]
             ? "rgba(0,150,0,0.6)"
             : "rgba(200,200,200,0.7)"
         }
-        polygonSideColor={({ properties }) =>
-          stateLookup[(properties as any).name.slice(0, 2).toUpperCase()]
+        polygonSideColor={(d: PolygonData) =>
+          stateLookup[d.properties?.name?.slice(0, 2).toUpperCase()]
             ? "rgba(0,100,0,0.8)"
             : "rgba(0,100,255,1)"
         }
-        polygonLabel={({ properties }) =>
-          stateLookup[(properties as any).name.slice(0, 2).toUpperCase()]
-            ? (properties as any).name
-            : (properties as any).ADMIN
+        polygonLabel={(d: PolygonData) =>
+          stateLookup[d.properties?.name?.slice(0, 2).toUpperCase()]
+            ? d.properties?.name
+            : d.properties?.ADMIN
         }
-        onPolygonClick={({ properties }) => {
-          const name = (properties as any).name || (properties as any).ADMIN;
+        onPolygonClick={(d: PolygonData) => {
+          const name = d.properties?.name || d.properties?.ADMIN;
           alert(
-            stateLookup[(properties as any).name?.slice(0, 2).toUpperCase()]
+            stateLookup[d.properties?.name?.slice(0, 2).toUpperCase()]
               ? `State: ${name}`
               : `Country: ${name}`,
           );
