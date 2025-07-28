@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function Trademark() {
-  return <div>Trademark</div>;
+export default function Trademark({ label }: { label: string }) {
+  return <>{label}</>;
 }

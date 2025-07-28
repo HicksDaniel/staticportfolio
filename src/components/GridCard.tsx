@@ -8,6 +8,8 @@ export default function GridCard({
   comp: Component,
   cursor,
   nav,
+  url,
+  label,
   children,
 }: {
   cHeight: number;
@@ -15,12 +17,17 @@ export default function GridCard({
   comp?: ComponentType<{}>;
   cursor?: string;
   nav?: string;
+  url?: string;
+  label?: string;
   children?: any;
 }) {
-  const navigate = useNavigate();
-
   const className = clsx(
-    `p-6`,
+    `flex`,
+    `flex-col`,
+    `text-xl font-semibold`,
+    `tracking-wider`,
+    `justify-center`,
+    `p-5`,
     `border-brdr-primary`,
     `border-4`,
     `rounded-xl`,
@@ -40,9 +47,17 @@ export default function GridCard({
     "lg:overflow-y-auto",
   );
 
+  const handleNavigation = () => {
+    if (nav) {
+      window.location.href = nav;
+    } else if (url) {
+      window.open(url, "_blank");
+    }
+  };
+
   return (
-    <div className={className} onClick={() => navigate(nav)}>
-      {Component ? <Component /> : (children ?? null)}
+    <div className={className} onClick={handleNavigation}>
+      {Component ? <Component label={label} /> : (children ?? null)}
     </div>
   );
 }

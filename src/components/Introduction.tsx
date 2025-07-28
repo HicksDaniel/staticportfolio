@@ -31,8 +31,8 @@ export default function Introduction() {
         </div>
       </div>
       <img
-        className="h-full w-1/4"
-        src="https://images.unsplash.com/photo-1521434095289-4c29c71ba6d4?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        className="h-4/4 rounded-2xl border-2 border-solid border-[color:var(--color-primary)]"
+        src="/2019-peru-cusco-ai-filter.png"
       />
     </div>
   );

@@ -52,6 +52,22 @@ export const stateLookup: Record<string, string> = {
   DC: "District of Columbia",
 };
 
+export const countryLookup: Record<string, string> = {
+  DE: "Germany",
+  DO: "Dominican Rep.",
+  BS: "Bahamas",
+  PE: "Peru",
+  BR: "Brazil",
+  AR: "Argentina",
+  CL: "Chile",
+  IE: "Ireland",
+  GB: "United Kingdom",
+  VN: "Vietnam",
+  CN: "China",
+  PH: "Philippines",
+  LA: "Laos",
+};
+
 export const visitedCountries = [
   "DE",
   "DO",
@@ -73,6 +89,10 @@ export const visitedStates = [
   "VA",
   "WV",
   "PA",
+  "NC",
+  "SC",
+  "MO",
+  "MN",
   "CO",
   "CA",
   "NY",
@@ -84,3 +104,5 @@ export const visitedStates = [
   "UT",
   "GA",
 ];
+
+export const upcomingTrip = ["VN", "CN", "PH", "LA"];
