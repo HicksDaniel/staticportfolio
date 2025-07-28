@@ -9,17 +9,36 @@
 @import "tailwindcss/preflight" layer(base);
 @import "tailwindcss/utilities" layer(utilities);
 
+/* Custom animations */
+@layer utilities {
+  @keyframes fade-in-up {
+    0% {
+      opacity: 0;
+      transform: translateY(60px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 1s ease-out forwards;
+  }
+}
+
 /* Ensure primary color classes are available */
 @theme {
   --color-primary: rgba(0, 0, 255, 1);
   --color-primary-highlight: rgba(0, 0, 255, 0.8);
-  --color-surface: rgba(150, 150, 150, 0.65);
-  --color-hidden-header: rgba(200, 200, 200, 0.45);
+  --color-surface: rgba(0, 0, 0, 0.1);
+  --color-hidden-header: rgba(150, 150, 150, 0.45);
   --color-secondary: blue;
   --color-highlight: purple;
   --color-brdr-primary: rgba(150, 150, 150, 1);
   --color-brdr-highlight: rgba(160, 120, 255, 0.87);
   --font-family-nixie-one: "Nixie One", cursive;
+  --color-font-color: rgba(255, 255, 255, 1);
 }
 
 @font-face {
@@ -43,6 +62,7 @@
   --color-primary: rgba(0, 0, 120, 0.6);
   --color-primary-highlight: rgba(0, 0, 120, 0.8);
   --background-color: #6e6d6d;
+  --color-font-color: rgba(220, 220, 220, 1);
 
   font-family:
     Satoshi Variable,
@@ -61,7 +81,7 @@
   display: flex;
   justify-content: flex-end;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: var(--color-font-color);
   background-color: var(--background-color);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -73,9 +93,9 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background-color: "red";
   align-items: flex-start;
 }
+
 @layer components {
   .btn {
     @apply !ml-3 flex rounded-lg border-1 border-primary-highlight px-5 py-1 font-medium transition-colors duration-200;

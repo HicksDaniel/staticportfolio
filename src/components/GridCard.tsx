@@ -1,8 +1,8 @@
-import type { ReactNode, ComponentType } from "react";
+import type { ComponentType } from "react";
 import { clsx } from "clsx";
-import { useNavigate } from "react-router";
 
 export default function GridCard({
+  index,
   cHeight,
   cWidth,
   comp: Component,
@@ -12,9 +12,10 @@ export default function GridCard({
   label,
   children,
 }: {
-  cHeight: number;
-  cWidth: number;
-  comp?: ComponentType<{}>;
+  index?: number;
+  cHeight?: number;
+  cWidth?: number;
+  comp?: ComponentType;
   cursor?: string;
   nav?: string;
   url?: string;
@@ -22,25 +23,27 @@ export default function GridCard({
   children?: any;
 }) {
   const className = clsx(
+    `bg-surface`,
+    `opacity-0`,
+    `animate-fade-in-up`,
     `flex`,
     `flex-col`,
-    `text-xl font-semibold`,
-    `tracking-wider`,
+    `text-base font-semibold`,
+    `tracking-wide`,
     `justify-center`,
-    `p-5`,
+    `p-4`,
     `border-brdr-primary`,
-    `border-4`,
-    `rounded-xl`,
-    `transition-shadow-colors`,
+    `border-2`,
+    `rounded-md`,
+    `transition-shadow`,
     `shadow-[0px_0px_0px_0px_var(--color-primary)]`,
-    `duration-2000`,
-    `hover:duration-200`,
+    `duration-3000`,
+    `hover:duration-300`,
     `hover:border-primary`,
     `hover:shadow-[0px_0px_5px_2px_var(--color-primary)]`,
-    `ease-out`,
-    `bg-surface`,
-    `lg:row-span-${cHeight}`,
-    `lg:col-span-${cWidth}`,
+    `w-full`,
+    cHeight ? `lg:row-span-${cHeight}` : "",
+    cWidth ? `lg:col-span-${cWidth}` : "",
     `cursor-${cursor ?? "default"}`,
     `overflow-hidden`,
     "lg:overflow-x-hidden",
@@ -56,7 +59,11 @@ export default function GridCard({
   };
 
   return (
-    <div className={className} onClick={handleNavigation}>
+    <div
+      className={`${className}`}
+      onClick={handleNavigation}
+      style={{ animationDelay: `${index * 100}ms` }}
+    >
       {Component ? <Component label={label} /> : (children ?? null)}
     </div>
   );

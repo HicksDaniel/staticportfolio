@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 
 export default function About() {
   return (
-    <div className="flex items-start text-sm">
+    <div className="mt-7 flex h-full flex-col justify-between text-sm">
       <div className="flex flex-col justify-start gap-4 text-sm font-light">
         <h2 className="hidden-header">About me</h2>
         <div>

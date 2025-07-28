@@ -7,6 +7,8 @@ const config: Config = {
     "./node_modules/primereact/**/*.{js,ts,jsx,tsx}",
   ],
   safelist: [
+    "animate-fade-in-up",
+    "animate-test-pulse",
     "lg:row-span-1",
     "lg:row-span-2",
     "lg:row-span-3",

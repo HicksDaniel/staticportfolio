@@ -53,7 +53,7 @@ export function useConstOverlay(
 
         console.log("All textures loaded");
         const scene = globeElRef.current.scene();
-        const geom = new THREE.SphereGeometry(10000, 64, 32);
+        const geom = new THREE.SphereGeometry(10000, 16, 8);
         geom.scale(-10, 10, 10);
 
         // Create materials
@@ -65,14 +65,14 @@ export function useConstOverlay(
         const matFigures = new THREE.MeshBasicMaterial({
           map: figuresTex,
           transparent: true,
-          alphaTest: 0.9,
+          alphaTest: 0.8,
           depthWrite: false,
           side: THREE.FrontSide,
         });
         const matBounds = new THREE.MeshBasicMaterial({
           map: boundsTex,
           transparent: true,
-          alphaTest: 0.45,
+          alphaTest: 0.3,
           depthWrite: false,
           side: THREE.FrontSide,
         });

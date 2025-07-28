@@ -31,7 +31,7 @@ export default function Introduction() {
         </div>
       </div>
       <img
-        className="h-4/4 rounded-2xl border-2 border-solid border-[color:var(--color-primary)]"
+        className="h-4/4 max-h-[450px] rounded-2xl border-2 border-solid border-[color:var(--color-primary)]"
         src="/2019-peru-cusco-ai-filter.png"
       />
     </div>

@@ -2,12 +2,7 @@
 import { useEffect, useState } from "react";
 import * as topojson from "topojson-client";
 import iso from "iso-3166-1";
-import {
-  stateLookup,
-  visitedCountries,
-  visitedStates,
-  upcomingTrip,
-} from "../consts";
+import { stateLookup } from "../consts";
 
 export interface PolygonData {
   properties: {

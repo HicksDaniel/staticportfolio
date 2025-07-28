@@ -1,9 +1,11 @@
 import Layout from "./Layout.tsx";
 
 function App() {
+  // Hey Dan - We did this so you can add a menu/nav bar if desired and havethe layout rendered inside.
   return (
-    // Hey Dan - We did this so you can add a menu/nav bar if desired and have the layout rendered inside.
-    <Layout />
+    <div className="flex h-screen w-screen items-center justify-center pt-0">
+      <Layout />
+    </div>
   );
 }
 

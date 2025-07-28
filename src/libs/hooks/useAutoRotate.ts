@@ -7,6 +7,6 @@ export function useAutoRotate(globeElRef: React.RefObject<any>) {
     if (!globe) return;
     const controls = globe.controls();
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.5;
+    controls.autoRotateSpeed = 0.25;
   }, [globeElRef]);
 }

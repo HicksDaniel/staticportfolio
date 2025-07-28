@@ -18,4 +18,9 @@ export const handleBrightnessChange = (brightness: number) => {
     "--background-color",
     backgroundColor,
   );
+
+  document.documentElement.style.setProperty(
+    "--color-font-color",
+    `rgb(${255 - value * 1.25},${255 - value * 1.25},${255 - value * 1.25})`,
+  );
 };

@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import HomePage from "./HomePage.tsx";
 
 import GlobeContainer from "./components/GlobeContainer.tsx";
