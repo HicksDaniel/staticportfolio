@@ -6,7 +6,7 @@ import { PrimeReactProvider } from "primereact/api";
 import Tailwind from "primereact/passthrough/tailwind";
 import { twMerge } from "tailwind-merge";
 import { RouterProvider } from "react-router-dom";
-import router from "./routes";
+import router from "./Routes";
 
 import "./index.css";
 import "primeicons/primeicons.css";
@@ -14,19 +14,18 @@ import "primeicons/primeicons.css";
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}>
-      <PrimeReactProvider
-        value={{
-          pt: Tailwind,
-          ptOptions: {
-            mergeSections: true,
-            mergeProps: true,
-            classNameMergeFunction: twMerge,
-          },
-        }}
-      >
-        <App />
-      </PrimeReactProvider>
-    </RouterProvider>
+    <PrimeReactProvider
+      value={{
+        pt: Tailwind,
+        ptOptions: {
+          mergeSections: true,
+          mergeProps: true,
+          classNameMergeFunction: twMerge,
+        },
+      }}
+    >
+      <RouterProvider router={router} />
+      <App />
+    </PrimeReactProvider>
   </React.StrictMode>,
 );

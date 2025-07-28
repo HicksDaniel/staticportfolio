@@ -2,8 +2,8 @@ import { useCallback } from "react";
 import {
   stateLookup,
   countryLookup,
-  visitedCountries,
-  visitedStates,
+  // visitedCountries,
+  // visitedStates,
   upcomingTrip,
 } from "../consts";
 import type { PolygonData } from "./useGlobePolygons";
@@ -13,7 +13,7 @@ function isUSState(d: PolygonData): boolean {
   return Boolean(d.properties?.name && !d.properties?.ADMIN);
 }
 
-function isUpcomingTripCountry(d: PolygonData): boolean {
+export function isUpcomingTripCountry(d: PolygonData): boolean {
   if (isUSState(d)) return false;
 
   const countryName = d.properties?.name;
@@ -64,7 +64,8 @@ export function usePolygonProps(): PolygonProps {
   }, []);
 
   const sideColor = useCallback(
-    (d: PolygonData) => "rgba(0,0,0,0.8)", // Always green
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    (_d: PolygonData) => "rgba(0,0,0,0.8)", // Always green
     [],
   );
 

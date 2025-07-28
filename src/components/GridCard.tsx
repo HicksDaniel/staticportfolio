@@ -1,4 +1,4 @@
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 import { clsx } from "clsx";
 
 export default function GridCard({
@@ -15,12 +15,12 @@ export default function GridCard({
   index?: number;
   cHeight?: number;
   cWidth?: number;
-  comp?: ComponentType;
+  comp?: ComponentType<{ label: string }>;
   cursor?: string;
   nav?: string;
   url?: string;
   label?: string;
-  children?: any;
+  children?: ReactNode;
 }) {
   const className = clsx(
     `bg-surface`,
@@ -57,6 +57,8 @@ export default function GridCard({
       window.open(url, "_blank");
     }
   };
+
+  if (!index || !label) return null;
 
   return (
     <div

@@ -1,5 +1,3 @@
-import React, { PureComponent } from "react";
-
 export default function About() {
   return (
     <div className="mt-7 flex h-full flex-col justify-between text-sm">

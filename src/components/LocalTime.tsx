@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function LocalTime() {
   const time = new Date();
   const formattedTime = time.toLocaleTimeString("en-US", {

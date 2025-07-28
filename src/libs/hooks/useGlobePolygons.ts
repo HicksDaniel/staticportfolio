@@ -8,10 +8,10 @@ export interface PolygonData {
   properties: {
     name?: string;
     ADMIN?: string;
-    [key: string]: any;
+    [key: string]: unknown;
   };
   id?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export function useGlobePolygons({
@@ -37,6 +37,7 @@ export function useGlobePolygons({
         const countries = topojson.feature(
           worldTopo,
           worldTopo.objects.countries,
+          // @ts-expect-error TODO: Fix type error with PolygonData
         ).features as PolygonData[];
 
         // Combine visited and upcoming countries
@@ -52,17 +53,19 @@ export function useGlobePolygons({
           "https://unpkg.com/us-atlas@3/states-10m.json",
         );
         const usTopo = await usRes.json();
+
         const states = topojson.feature(usTopo, usTopo.objects.states)
           .features as PolygonData[];
-        const selectedStates = states.filter((s) =>
+
+        const selectedStates = states.filter((s: PolygonData) =>
           visitedStates
             .map((code) => stateLookup[code])
             .includes(s.properties.name ?? ""),
         );
 
         setPolygons([...selectedCountries, ...selectedStates]);
-      } catch (err: any) {
-        setError(err);
+      } catch (err: unknown) {
+        setError(err as Error);
       } finally {
         setLoading(false);
       }
