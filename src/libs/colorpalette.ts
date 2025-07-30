@@ -6,8 +6,8 @@ export const colorPalette = [
   },
   {
     name: "blue",
-    primary: "rgba(0, 0, 200, 0.6)",
-    highlight: "rgba(0, 0, 200, 0.8)",
+    primary: "rgba(60, 60, 255, 0.6)",
+    highlight: "rgba(60, 60, 255, 0.8)",
   },
   {
     name: "red",

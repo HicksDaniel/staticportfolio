@@ -1,18 +1,8 @@
-// hooks/useGlobePolygons.ts
 import { useEffect, useState } from "react";
 import * as topojson from "topojson-client";
 import iso from "iso-3166-1";
 import { stateLookup } from "../consts";
-
-export interface PolygonData {
-  properties: {
-    name?: string;
-    ADMIN?: string;
-    [key: string]: unknown;
-  };
-  id?: string;
-  [key: string]: unknown;
-}
+import type { PolygonData } from "../types";
 
 export function useGlobePolygons({
   visitedCountries,
@@ -34,13 +24,12 @@ export function useGlobePolygons({
           "https://unpkg.com/world-atlas@2/countries-110m.json",
         );
         const worldTopo = await worldRes.json();
-        const countries = topojson.feature(
-          worldTopo,
-          worldTopo.objects.countries,
-          // @ts-expect-error TODO: Fix type error with PolygonData
-        ).features as PolygonData[];
+        const countries = worldTopo.objects.countries.geometries.map(
+          (geom: any) => topojson.feature(worldTopo, geom),
+        ) as PolygonData[];
 
-        // Combine visited and upcoming countries
+        console.log("World topo loaded, countries:", countries);
+
         const allCountryCodes = [...visitedCountries, ...upcomingTrip];
         const selectedCountries = allCountryCodes
           .map((code) => {
@@ -54,8 +43,9 @@ export function useGlobePolygons({
         );
         const usTopo = await usRes.json();
 
-        const states = topojson.feature(usTopo, usTopo.objects.states)
-          .features as PolygonData[];
+        const states = usTopo.objects.states.geometries.map((geom: any) =>
+          topojson.feature(usTopo, geom),
+        ) as PolygonData[];
 
         const selectedStates = states.filter((s: PolygonData) =>
           visitedStates

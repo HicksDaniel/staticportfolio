@@ -1,27 +1,33 @@
-import type { ComponentType, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { clsx } from "clsx";
+
+interface GridCardProps {
+  index?: number;
+  lgHeight?: number;
+  lgWidth?: number;
+  mdHeight?: number;
+  mdWidth?: number;
+  comp?: React.ComponentType<any>;
+  label?: string;
+  cursor?: string;
+  nav?: string;
+  url?: string;
+  children?: ReactNode;
+}
 
 export default function GridCard({
   index,
-  cHeight,
-  cWidth,
+  lgHeight,
+  lgWidth,
+  mdHeight,
+  mdWidth,
   comp: Component,
   cursor,
   nav,
   url,
   label,
   children,
-}: {
-  index?: number;
-  cHeight?: number;
-  cWidth?: number;
-  comp?: ComponentType<{ label: string }>;
-  cursor?: string;
-  nav?: string;
-  url?: string;
-  label?: string;
-  children?: ReactNode;
-}) {
+}: GridCardProps) {
   const className = clsx(
     `bg-surface`,
     `opacity-0`,
@@ -41,13 +47,11 @@ export default function GridCard({
     `hover:duration-300`,
     `hover:border-primary`,
     `hover:shadow-[0px_0px_5px_2px_var(--color-primary)]`,
-    `w-full`,
-    cHeight ? `lg:row-span-${cHeight}` : "",
-    cWidth ? `lg:col-span-${cWidth}` : "",
+    lgHeight ? `lg:row-span-${lgHeight}` : "",
+    lgWidth ? `lg:col-span-${lgWidth}` : "",
+    mdHeight ? `md:row-span-${mdHeight}` : "",
+    mdWidth ? `md:col-span-${mdWidth}` : "",
     `cursor-${cursor ?? "default"}`,
-    `overflow-hidden`,
-    "lg:overflow-x-hidden",
-    "lg:overflow-y-auto",
   );
 
   const handleNavigation = () => {
@@ -58,15 +62,17 @@ export default function GridCard({
     }
   };
 
-  if (!index || !label) return null;
+  const compLabel = label || "";
+
+  if (!index) return null;
 
   return (
     <div
       className={`${className}`}
       onClick={handleNavigation}
-      style={{ animationDelay: `${index * 100}ms` }}
+      style={{ animationDelay: `${index * 150}ms` }}
     >
-      {Component ? <Component label={label} /> : (children ?? null)}
+      {Component ? <Component label={compLabel} /> : (children ?? null)}
     </div>
   );
 }

@@ -1,15 +1,8 @@
 import { useCallback } from "react";
-import {
-  stateLookup,
-  countryLookup,
-  // visitedCountries,
-  // visitedStates,
-  upcomingTrip,
-} from "../consts";
-import type { PolygonData } from "./useGlobePolygons";
+import { stateLookup, countryLookup, upcomingTrip } from "../consts";
+import type { PolygonData, PolygonProps } from "../types";
 
 function isUSState(d: PolygonData): boolean {
-  // US states have a 'name' property, countries have 'ADMIN'
   return Boolean(d.properties?.name && !d.properties?.ADMIN);
 }
 
@@ -19,7 +12,6 @@ export function isUpcomingTripCountry(d: PolygonData): boolean {
   const countryName = d.properties?.name;
   if (!countryName) return false;
 
-  // Convert country name to code and check against upcomingTrip array
   const countryCode = Object.keys(countryLookup).find(
     (key) => countryLookup[key] === countryName,
   );
@@ -27,50 +19,34 @@ export function isUpcomingTripCountry(d: PolygonData): boolean {
   return countryCode ? upcomingTrip.includes(countryCode) : false;
 }
 
-interface PolygonProps {
-  capColor: (d: PolygonData) => string;
-  sideColor: (d: PolygonData) => string;
-  label: (d: PolygonData) => string;
-  onClick: (d: PolygonData) => void;
-}
-
 export function usePolygonProps(): PolygonProps {
   const capColor = useCallback((d: PolygonData) => {
-    // Distinguish between countries and US states by ID length
     const isUSState = d.id && d.id.length <= 2;
-
     if (isUSState) {
-      // US State
       const stateName = d.properties?.name;
       const stateCode = Object.keys(stateLookup).find(
         (key) => stateLookup[key] === stateName,
       );
       if (stateCode && upcomingTrip.includes(stateCode)) {
-        return "rgba(255,255,255,0.6)"; // White for upcoming trip states
+        return "rgba(255,255,255,0.6)";
       }
-      return "rgba(0,150,0,0.6)"; // Green for visited states
+      return "rgba(0,150,0,0.6)";
     } else {
-      // Country
       const countryName = d.properties?.name;
       const countryCode = Object.keys(countryLookup).find(
         (key) => countryLookup[key] === countryName,
       );
 
       if (countryCode && upcomingTrip.includes(countryCode)) {
-        return "rgba(150,150,150,0.6)"; // White for upcoming trip countries
+        return "rgba(150,150,150,0.6)";
       }
-      return "rgba(0,150,0,0.6)"; // Green for visited countries
+      return "rgba(0,150,0,0.6)";
     }
   }, []);
 
-  const sideColor = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (_d: PolygonData) => "rgba(0,0,0,0.8)", // Always green
-    [],
-  );
+  const sideColor = useCallback((_d: PolygonData) => "rgba(0,0,0,0.8)", []);
 
   const label = useCallback((d: PolygonData) => {
-    // Show the actual name for both states and countries
     return d.properties?.name ?? d.properties?.ADMIN ?? "";
   }, []);
 

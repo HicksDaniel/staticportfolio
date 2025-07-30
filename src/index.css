@@ -14,16 +14,69 @@
   @keyframes fade-in-up {
     0% {
       opacity: 0;
-      transform: translateY(60px);
+      transform: translateY(100px);
     }
     100% {
       opacity: 1;
       transform: translateY(0);
     }
   }
+  @keyframes fade-out-down {
+    0% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(100px);
+    }
+  }
 
   .animate-fade-in-up {
     animation: fade-in-up 1s ease-out forwards;
+  }
+  .animate-fade-out-down {
+    animation: fade-out-down 0.5s ease-out backwards;
+  }
+
+  @keyframes radialReveal {
+    0% {
+      clip-path: inset(50% 0% 50% 0%);
+    }
+    50% {
+      clip-path: inset(45% 0% 45% 0%);
+    }
+    51% {
+      clip-path: ellipse(200% 5% at center);
+    }
+    100% {
+      clip-path: ellipse(100% 60% at center);
+    }
+  }
+
+  @keyframes radialReset {
+    0% {
+      clip-path: ellipse(100% 60% at center);
+    }
+    49% {
+      clip-path: ellipse(200% 5% at center);
+    }
+    50% {
+      clip-path: inset(45% 0% 45% 0%);
+    }
+    100% {
+      clip-path: inset(50% 0% 50% 0%);
+    }
+  }
+
+  .radial-reveal {
+    animation: radialReveal 2s ease-out forwards;
+    clip-path: circle(0% at center);
+  }
+
+  .radial-reset {
+    animation: radialReset 2s ease-out forwards;
+    clip-path: circle(100% at center);
   }
 }
 
@@ -31,7 +84,8 @@
 @theme {
   --color-primary: rgba(0, 0, 255, 1);
   --color-primary-highlight: rgba(0, 0, 255, 0.8);
-  --color-surface: rgba(0, 0, 0, 0.1);
+  --color-surface: rgba(0, 0, 0, 0.3);
+  --color-surface-obscure: rgba(0, 0, 0, 0.8);
   --color-hidden-header: rgba(150, 150, 150, 0.45);
   --color-secondary: blue;
   --color-highlight: purple;
@@ -76,10 +130,13 @@
   box-sizing: border-box;
   line-height: 1.5;
   font-weight: 400;
+  padding: 0;
+  margin: 0;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: flex-end;
+  overflow: hidden;
   color-scheme: light dark;
   color: var(--color-font-color);
   background-color: var(--background-color);
@@ -91,15 +148,23 @@
 
 body {
   display: flex;
+  padding: 0;
+  margin: 0;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
 }
 
+ul > li {
+  margin-left: 0.5rem;
+}
+
 @layer components {
   .btn {
-    @apply !ml-3 flex rounded-lg border-1 border-primary-highlight px-5 py-1 font-medium transition-colors duration-200;
+    @apply flex max-w-[200px] rounded-lg border-1 border-primary-highlight px-5 py-1 font-medium transition-colors duration-200;
+
     @apply shadow-[2px_2px_0px_0px_var(--color-primary-highlight)] focus:shadow-[0px_4px_15px_1px_var(--color-primary-highlight)] active:translate-px active:shadow-[-2px_-2px_0px_0px_var(--color-primary-highlight)];
+
     @apply bg-gray-500 text-white hover:bg-gray-700 active:bg-gray-800;
   }
 
@@ -118,4 +183,43 @@ body {
   .nixie-clock {
     @apply flex h-full items-center justify-center font-family-nixie-one text-2xl font-light drop-shadow-[0px_0px_10px_var(--color-primary-highlight)];
   }
+  .modal {
+    @apply h-[125px] w-[400px] rounded-4xl border-3 bg-surface-obscure text-white;
+  }
 }
+
+/* @keyframes radialReveal {
+    0% {
+      clip-path: inset(0% 45% 0% 45%);
+    }
+    10% {
+      clip-path: inset(0% 15% 0% 75%);
+    }
+    20% {
+      clip-path: inset(0% 75% 0% 15%);
+    }
+    30% {
+      clip-path: inset(0% 0% 0% 90%);
+    }
+    40% {
+      clip-path: inset(0% 90% 0% 0%);
+    }
+    50% {
+      clip-path: inset(45% 90% 45% 0%);
+    }
+    60% {
+      clip-path: inset(45% 0% 45% 0%);
+    }
+    65% {
+      clip-path: ellipse(150% 5% at center);
+    }
+    75% {
+      clip-path: ellipse(5% 5% at center);
+    }
+    85% {
+      clip-path: ellipse(4% 40% at center);
+    }
+    100% {
+      clip-path: ellipse(50% 40% at center);
+    }
+  } */

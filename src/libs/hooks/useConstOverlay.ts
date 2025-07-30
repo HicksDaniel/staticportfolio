@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import type { GlobeRef } from "../types";
 
 export function useConstOverlay(
-  globeElRef: React.RefObject<unknown>,
+  globeElRef: React.RefObject<GlobeRef | undefined>,
   showFigures: boolean,
   showBounds: boolean,
 ) {
@@ -13,7 +14,6 @@ export function useConstOverlay(
     matBounds: THREE.MeshBasicMaterial;
   }>(null);
 
-  // Initial setup - load all textures
   useEffect(() => {
     console.log("Initial useEffect running");
 
@@ -29,8 +29,8 @@ export function useConstOverlay(
       const maxAttempts = 50;
       while (attempts < maxAttempts) {
         console.log(`Attempt ${attempts + 1}: checking for scene`);
-        // @ts-expect-error TODO: Fix type error with GlobeRef
-        if (globeElRef.current && globeElRef.current.scene) {
+
+        if (globeElRef.current && globeElRef.current.scene()) {
           console.log("Scene found!");
           break;
         }
@@ -38,8 +38,7 @@ export function useConstOverlay(
         attempts++;
       }
 
-      // @ts-expect-error TODO: Fix type error with GlobeRef
-      if (!globeElRef.current || !globeElRef.current.scene) {
+      if (!globeElRef.current || !globeElRef.current.scene()) {
         console.error("Globe scene not available");
         return;
       }
@@ -54,12 +53,11 @@ export function useConstOverlay(
         ]);
 
         console.log("All textures loaded");
-        // @ts-expect-error TODO: Fix type error with GlobeRef
+
         const scene = globeElRef.current.scene();
         const geom = new THREE.SphereGeometry(10000, 16, 8);
         geom.scale(-10, 10, 10);
 
-        // Create materials
         const matStar = new THREE.MeshBasicMaterial({
           map: starTex,
           side: THREE.DoubleSide,
@@ -79,8 +77,6 @@ export function useConstOverlay(
           depthWrite: false,
           side: THREE.FrontSide,
         });
-
-        // Create and add star mesh
         const starMesh = new THREE.Mesh(geom, matStar);
         starMesh.renderOrder = -1;
         scene.add(starMesh);
@@ -97,31 +93,26 @@ export function useConstOverlay(
       }
     }
 
-    // Only load if we don't already have the star mesh
     if (!starMeshRef.current) {
       load();
     }
-  }); // No dependency array - runs on every render but with guard
+  });
 
-  // Handle overlay toggles
   useEffect(() => {
     const mesh = starMeshRef.current;
     if (!mesh || !materialsRef.current) return;
 
-    // @ts-expect-error TODO: Fix type error with GlobeRef
     const scene = globeElRef.current?.scene();
     if (!scene) return;
 
     const { matFigures, matBounds } = materialsRef.current;
-
-    // Remove existing overlay meshes
     const overlaysToRemove = scene.children.filter(
-      // @ts-expect-error TODO: Fix type error with GlobeRef
-      (child: unknown) => child.userData.isOverlay,
+      (child: THREE.Object3D) => child.userData.isOverlay,
     );
-    overlaysToRemove.forEach((overlay: unknown) => scene.remove(overlay));
+    overlaysToRemove.forEach((overlay: THREE.Object3D) =>
+      scene.remove(overlay),
+    );
 
-    // Add figure overlay if enabled
     if (showFigures) {
       const figuresMesh = new THREE.Mesh(mesh.geometry, matFigures);
       figuresMesh.userData.isOverlay = true;
@@ -129,7 +120,6 @@ export function useConstOverlay(
       scene.add(figuresMesh);
     }
 
-    // Add bounds overlay if enabled
     if (showBounds) {
       const boundsMesh = new THREE.Mesh(mesh.geometry, matBounds);
       boundsMesh.userData.isOverlay = true;

@@ -8,15 +8,18 @@ export default function Designs() {
   return (
     <div className="flex h-1/2 w-screen max-w-lg grid-cols-2 flex-col content-evenly items-center justify-evenly gap-4">
       <Button
-        className="btn gap-2"
+        className="btn animate-fade-in-up gap-2"
         label=""
         icon="pi pi-arrow-left"
         onClick={() => navigate(-1)}
       >
         Go Back
       </Button>
-      <GridCard>Design Page</GridCard>
-      <GridCard>Page is Under Construction...</GridCard>
+      <GridCard index={1}>Design Page</GridCard>
+      <GridCard index={2}>
+        This will be a place I will be sharing animations transtitions ect...
+      </GridCard>
+      <GridCard index={2}>Page is Under Construction...</GridCard>
     </div>
   );
 }

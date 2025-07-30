@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { selectColor, handleBrightnessChange } from "../utils/themeUtils";
+import { selectColor, handleBrightnessChange } from "../libs/utils/themeUtils";
 import { colorPalette } from "../libs/colorpalette";
 
 export default function ThemeSwap() {
