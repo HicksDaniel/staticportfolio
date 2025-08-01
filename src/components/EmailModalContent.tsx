@@ -3,7 +3,7 @@ import {
   openGmailPopup,
   openMailto,
   openOutlookPopup,
-} from "../libs/utils/functionUtils";
+} from "../libs/utils/MessagingUtils";
 
 export const emailModalContent = () => {
   return (

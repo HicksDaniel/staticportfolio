@@ -136,7 +136,7 @@
   height: 100%;
   display: flex;
   justify-content: flex-end;
-  overflow: hidden;
+
   color-scheme: light dark;
   color: var(--color-font-color);
   background-color: var(--background-color);

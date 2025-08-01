@@ -82,11 +82,11 @@ export default function Introduction() {
         onMouseEnter={handleMouseEnter}
       >
         <img
-          src="/2019-peru-cusco-irl.png"
+          src="2019-peru-cusco-irl.png"
           className="h-full w-full rounded-2xl object-cover"
         />
         <img
-          src="/2019-peru-cusco-ai-filter.png"
+          src="2019-peru-cusco-ai-filter.png"
           className={`absolute inset-0 h-full w-full rounded-2xl object-cover ${
             hasBeenHovered ? (toggled ? "radial-reset" : "radial-reveal") : ""
           }`}
