@@ -16,24 +16,22 @@ const router = createBrowserRouter(
           element: <HomePage />,
         },
         {
-          path: "/theworld",
+          path: "theworld",
           element: <GlobeContainer />,
         },
 
         {
-          path: "/design",
+          path: "design",
           element: <Designs />,
         },
         {
-          path: "/playground",
+          path: "playground",
           element: <Playground />,
         },
       ],
     },
   ],
-  {
-    basename: import.meta.env.DEV ? "/" : "/staticportfolio",
-  },
+  { basename: "/staticportfolio" },
 );
 
 export default router;
