@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://HicksDaniel.github.io/staticportfolio/",
+  "homepage": "https://hicksdaniel.github.io/staticportfolio/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
