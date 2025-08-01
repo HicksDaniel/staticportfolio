@@ -47,7 +47,7 @@ function HomePage() {
           comp={ProjectLink}
           label="Designs"
           cursor="pointer"
-          nav="/design"
+          nav="design"
         />
         <GridCard
           index={4}
@@ -66,7 +66,7 @@ function HomePage() {
           comp={ProjectLink}
           cursor="pointer"
           label="Playground"
-          nav="/playground"
+          nav="playground"
         />
         <GridCard
           index={6}
