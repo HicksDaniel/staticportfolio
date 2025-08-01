@@ -187,15 +187,15 @@ const CombinedEarthGlobe = forwardRef<GlobeRef, CombinedEarthGlobeProps>(
         const loader = new THREE.TextureLoader();
 
         console.log("CombinedEarthGlobe: Loading starmap.webp...");
-        const starTexture = await loader.loadAsync("/starmap.webp");
+        const starTexture = await loader.loadAsync("starmap.webp");
         console.log("CombinedEarthGlobe: Starmap loaded successfully");
 
         console.log("CombinedEarthGlobe: Loading figures.webp...");
-        const figuresTexture = await loader.loadAsync("/figures.webp");
+        const figuresTexture = await loader.loadAsync("figures.webp");
         console.log("CombinedEarthGlobe: Figures loaded successfully");
 
         console.log("CombinedEarthGlobe: Loading bounds.webp...");
-        const boundsTexture = await loader.loadAsync("/bounds.webp");
+        const boundsTexture = await loader.loadAsync("bounds.webp");
         console.log("CombinedEarthGlobe: Bounds loaded successfully");
 
         console.log("CombinedEarthGlobe: All constellation textures loaded");

@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import type { GlobeMethods } from "react-globe.gl";
 
 export type EmailModalContentProps = {
   to: string;
@@ -7,7 +6,7 @@ export type EmailModalContentProps = {
   body: string;
 };
 
-export interface GlobeRef extends GlobeMethods {
+export interface GlobeRef {
   scene: () => THREE.Scene;
   controls: () => any;
 }
