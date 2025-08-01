@@ -1,11 +1,11 @@
-import { createHashRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import HomePage from "./HomePage";
 import GlobeContainer from "./components/GlobeContainer";
 import Designs from "./components/Designs";
 import Playground from "./components/Playground";
 import App from "./App";
 
-const router = createHashRouter(
+const router = createBrowserRouter(
   [
     {
       path: "/",
@@ -16,16 +16,16 @@ const router = createHashRouter(
           element: <HomePage />,
         },
         {
-          path: "theworld",
+          path: "/theworld",
           element: <GlobeContainer />,
         },
 
         {
-          path: "design",
+          path: "/design",
           element: <Designs />,
         },
         {
-          path: "playground",
+          path: "/playground",
           element: <Playground />,
         },
       ],
