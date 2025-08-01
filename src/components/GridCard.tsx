@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { clsx } from "clsx";
-
+import { useNavigate } from "react-router";
 interface GridCardProps {
   index?: number;
   lgHeight?: number;
@@ -54,9 +54,11 @@ export default function GridCard({
     `cursor-${cursor ?? "default"}`,
   );
 
+  const Navigate = useNavigate();
+
   const handleNavigation = () => {
     if (nav) {
-      window.location.href = nav;
+      Navigate(nav);
     } else if (url) {
       window.open(url, "_blank");
     }
